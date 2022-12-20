@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mycompany</groupId>
+    <artifactId>RenAHous</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <properties>
+         <!-- region Configure Java version & Main full package and class name -->
+        <!-- WARNING: add release scope if 1.9 and older versions are used at build/plugins/plugin/[maven-compiler-plugin]/configuration-->
+        <java.version>8</java.version>
+        <main.class>com.mycompany.renahous.RenAHous</main.class>
+        <!--endregion-->
+        <!-- region General configurations of the project -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    
+     <build>
+      
+        <plugins>
+            <!-- region Established the java version defined in the properties' section for every scope (compatible with newer java versions) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <!-- WARNING: add release scope for 1.9 and older versions -->
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+            <!-- endregion -->
+
+            <!-- region Builds an *executable* JAR on package goal -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass> ${main.class} </mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- endregion -->
+
+            <!-- region Forces the app to be executed when using `mvn package` -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>${main.class}</mainClass>
+                    <!--                    <cleanupDaemonThreads>false</cleanupDaemonThreads>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- endregion -->
+
+          
+
+            
+
+            <!-- region Eliminates some compilation glitches for the IDEs when using lombok -->
+            <!--delete if the glitches are not present-->
+            <!--	    <plugin>-->
+            <!--		<groupId>org.projectlombok</groupId>-->
+            <!--		<artifactId>lombok-maven-plugin</artifactId>-->
+            <!--		<version>1.18.12.0</version>-->
+            <!--		<configuration>-->
+            <!--		    <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>-->
+            <!--		    <outputDirectory>${delombok.output}</outputDirectory>-->
+            <!--		    <addOutputDirectory>false</addOutputDirectory>-->
+            <!--		</configuration>-->
+            <!--		<executions>-->
+            <!--		    <execution>-->
+            <!--			 Generate delomboked code -->
+            <!--			<phase>generate-sources</phase>-->
+            <!--			<goals>-->
+            <!--			    <goal>delombok</goal>-->
+            <!--			</goals>-->
+            <!--		    </execution>-->
+            <!--		</executions>-->
+            <!--	    </plugin>-->
+            <!-- endregion -->
+
+            
+
+           
+
+        </plugins>
+    </build>
+</project>
